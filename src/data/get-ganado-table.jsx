@@ -16,7 +16,7 @@ import { CustomPagination } from "@/widgets/pagination"; // Asegúrate de tener 
 
 
 function GetGanadoTable() {
-  const url = "http://79.143.190.196:8080/jGanado/servletGanado?xAccion=extraeListadoGanado&xApiKey=7577f6b591ba5f7cea120bfcccad2dbde13347ae879b1ef890e8420718632b17c5539fe08733a6de24cfd418f493bb586c81";
+  const url = `${import.meta.env.VITE_API_URL}/jGanado/servletGanado?xAccion=extraeListadoGanado&xApiKey=${import.meta.env.VITE_API_KEY}`;
   const [cattles, setCattles] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage] = useState(5); // Define la cantidad de elementos por página
