@@ -15,17 +15,9 @@ import {
 } from "@material-tailwind/react";
 import {
   EllipsisVerticalIcon,
-  ArrowUpIcon,
 } from "@heroicons/react/24/outline";
-import { StatisticsCard } from "@/widgets/cards";
-import {
-  statisticsCardsData,
-  projectsTableData,
-  ordersOverviewData,
-} from "@/data";
-import GetGanadoTable from '@/data/get-ganado-table';
-import { CheckCircleIcon, ClockIcon } from "@heroicons/react/24/solid";
 
+import GetGanadoTable from '@/data/get-ganado-table';
 export function Home() {
   return (
     <div className="mt-4">

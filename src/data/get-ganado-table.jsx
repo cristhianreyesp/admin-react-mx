@@ -6,12 +6,19 @@ import {
   IconButton,
   Tooltip,
   Button,
+  Card,
   Dialog,
   DialogHeader,
   DialogBody,
   DialogFooter,
+  Input,
+  Checkbox,
+  Select,
+  Option,
+  Textarea,
 } from "@material-tailwind/react";
-import { EyeIcon } from "@heroicons/react/24/solid";
+
+import { EyeIcon, ClockIcon } from "@heroicons/react/24/solid";
 import { CustomPagination } from "@/widgets/pagination"; // Asegúrate de tener la ruta correcta al archivo pagination.jsx
 
 
@@ -19,9 +26,10 @@ function GetGanadoTable() {
   const url = `${import.meta.env.VITE_API_URL}/jGanado/servletGanado?xAccion=extraeListadoGanado&xApiKey=${import.meta.env.VITE_API_KEY}`;
   const [cattles, setCattles] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [perPage] = useState(5); // Define la cantidad de elementos por página
+  const [perPage] = useState(10); // Define la cantidad de elementos por página
   const [selectedCattle, setSelectedCattle] = useState(null); // Estado para almacenar el ganado seleccionado
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [value, setValue] = React.useState("1"); // slect seleccion
 
 
   useEffect(() => {
@@ -143,6 +151,7 @@ function GetGanadoTable() {
         /></div>
       {/* Diálogo para mostrar detalles del ganado */}
       <Dialog
+        size="lg"
         open={dialogOpen}
         onClose={closeDialog}
         animate={{
@@ -151,14 +160,153 @@ function GetGanadoTable() {
         }}
       >
         <DialogHeader>Detalles del Ganado</DialogHeader>
-        <DialogBody>
+        <DialogBody className="overflow-y-auto min-h-auto">
           {selectedCattle && (
             <>
-              <Typography variant="body">{`Arete Siniga: ${selectedCattle.aretesiniga}`}</Typography>
-              <Typography variant="body">{`Dueño: ${selectedCattle.dueno}`}</Typography>
-              <Typography variant="body">{`Fecha de Nacimiento: ${selectedCattle.fechanac}`}</Typography>
-              <Typography variant="body">{`Tipo: ${selectedCattle.tipo}`}</Typography>
-              <Typography variant="body">{`Sexo: ${selectedCattle.sexo}`}</Typography>
+              <Card className="mx-auto w-full max-w-[28rem]">
+                <div className="flex items-center gap-6">
+                  <div>
+                    <Checkbox
+                      label={
+                        <Typography color="blue-gray" className="font-medium">
+                          Arete Siniga:
+                        </Typography>
+                      }
+                    />
+                  </div>
+                  <div>
+                    <Checkbox
+                      label={
+                        <Typography color="blue-gray" className="font-medium">
+                          Arete Azul:
+                        </Typography>
+                      }
+                    />
+                  </div>
+                </div>
+                <div className="my-2 flex items-center gap-3">
+                  <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="font-medium"
+                  >
+                    Buscar:
+                  </Typography>
+                  <div className="relative flex w-full max-w-[16.5rem]">
+                    <Input
+                      type="text"
+                      label="Arete Codigo"
+                      className="pr-16"
+                      containerProps={{
+                        className: "min-w-0",
+                      }}
+                    />
+                    <Button
+                      size="sm"
+                      color={"blue-gray"}
+                      className="!absolute right-1 top-1 rounded"
+                    >
+                      Buscar
+                    </Button>
+                  </div>
+                </div>
+                <div className="my-2 flex items-center gap-16">
+                  <div>
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="mr-2 font-medium"
+                    >
+                      Id: 0000000{selectedCattle.id}
+                    </Typography>
+                  </div>
+                  <div>
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="mr-2 font-medium"
+                    >
+                      Arete Siniga: {selectedCattle.aretesiniga}
+                    </Typography>
+                  </div>
+                </div>
+                <div className="my-2 flex items-center w-full max-w-[20rem]">
+                  <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="mr-2 font-medium"
+                  >
+                    Sexo:
+                  </Typography>
+                  <Select label="Seleciona Sexo">
+                    <Option>Macho</Option>
+                    <Option>Hembra</Option>
+                  </Select>
+                </div>
+                <div className="my-2 flex items-center gap-16">
+                  <div>
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="mr-2 font-medium"
+                    >
+                      Dueño: {selectedCattle.dueno}
+                    </Typography>
+                  </div>
+                  <div>
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="mr-2 font-medium"
+                    >
+                      Fecha Nacimiento: {selectedCattle.fechanac}
+                    </Typography>
+                  </div>
+                </div>
+                <div className="my-2 flex items-center w-full max-w-[20rem]">
+                  <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="mr-2 font-medium"
+                  >
+                    Tipo:
+                  </Typography>
+                  <Select label="Tipo"
+                    value={value}
+                    onChange={(val) => setValue(val)}>
+                    <Option value='1'>{selectedCattle.tipo}</Option>
+                    <Option value='2'>VAQ2</Option>
+                  </Select>
+                </div>
+                <div className="my-2 flex items-center gap-16">
+                  <div >
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="mr-2 font-medium"
+                    >
+                      Clave Fierro: {selectedCattle.clavefierro}
+                    </Typography>
+                  </div>
+                  <div>
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="mr-2 font-medium"
+                    >
+                      Clave Rancho: {selectedCattle.claverancho}
+                    </Typography>
+                  </div>
+                </div>
+                <div className="mb-1 flex flex-col gap-6 w-full">
+                  <Typography variant="h6" color="blue-gray" className="-mb-3">
+                    Observacion
+                  </Typography>
+                  <div className="w-96">
+                    <Textarea label="" />
+                  </div>
+                </div>
+              </Card>
             </>
           )}
         </DialogBody>
