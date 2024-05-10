@@ -26,11 +26,14 @@ function GetGanadoTable() {
   const url = `${import.meta.env.VITE_API_URL}/jGanado/servletGanado?xAccion=extraeListadoGanado&xApiKey=${import.meta.env.VITE_API_KEY}`;
   const [cattles, setCattles] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [perPage] = useState(10); // Define la cantidad de elementos por página
+  const [perPage] = useState(8); // Define la cantidad de elementos por página
   const [selectedCattle, setSelectedCattle] = useState(null); // Estado para almacenar el ganado seleccionado
   const [dialogOpen, setDialogOpen] = useState(false);
   const [value, setValue] = React.useState("1"); // slect seleccion
-
+  const [esAreteSiniga, setEsAreteSiniga] = useState(false);
+  const [esAreteAzul, setEsAreteAzul] = useState(false);
+  const [estaDesactivado, setEstaDesactivado] = useState(true);
+  const [saludo, setSaludo] = useState('Hola');
 
   useEffect(() => {
     getCattles();
@@ -53,6 +56,23 @@ function GetGanadoTable() {
   const closeDialog = () => {
     setSelectedCattle(null);
     setDialogOpen(false); // Cerrar el diálogo al cerrar los detalles
+  };
+
+  const handleCheckboxSinigaChange = (event) => {
+    setEsAreteSiniga(event.target.checked);
+    setEsAreteAzul(event.target.unchecked);
+    setSaludo('Hola '.concat('Pumba'));
+    setEstaDesactivado(false)
+    console.log(saludo)
+  };
+
+  const handleCheckboxAzulChange = (event) => {
+
+    setEsAreteAzul(event.target.checked);
+    setEsAreteSiniga(event.target.unchecked);
+    setSaludo('Hola '.concat('Coco'));
+    setEstaDesactivado(true);
+    console.log(saludo)
   };
 
   // Calcula el índice inicial y final de los elementos que se mostrarán en la página actual
@@ -152,6 +172,7 @@ function GetGanadoTable() {
       {/* Diálogo para mostrar detalles del ganado */}
       <Dialog
         size="lg"
+        className="rounded-md"
         open={dialogOpen}
         onClose={closeDialog}
         animate={{
@@ -167,6 +188,8 @@ function GetGanadoTable() {
                 <div className="flex items-center gap-6">
                   <div>
                     <Checkbox
+                      checked={esAreteSiniga}
+                      onChange={handleCheckboxSinigaChange}
                       label={
                         <Typography color="blue-gray" className="font-medium">
                           Arete Siniga:
@@ -176,6 +199,8 @@ function GetGanadoTable() {
                   </div>
                   <div>
                     <Checkbox
+                      checked={esAreteAzul}
+                      onChange={handleCheckboxAzulChange}
                       label={
                         <Typography color="blue-gray" className="font-medium">
                           Arete Azul:
@@ -200,6 +225,7 @@ function GetGanadoTable() {
                       containerProps={{
                         className: "min-w-0",
                       }}
+                      estaDesactivado
                     />
                     <Button
                       size="sm"
