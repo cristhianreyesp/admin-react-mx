@@ -17,8 +17,8 @@ import {
   EllipsisVerticalIcon,
 } from "@heroicons/react/24/outline";
 
-//import GetGanadoTable from '@/data/get-ganado-table';
-import GetGanadoTable from '@/data/ganado-table';
+import GetGanadoTable from '@/data/get-ganado-table';
+//import GetGanadoTable from '@/data/ganado-table';
 export function Home() {
   return (
     <div className="mt-4">
